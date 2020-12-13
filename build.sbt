@@ -1,6 +1,4 @@
 import _root_.sbtcrossproject.Platform
-// shadow sbt-scalajs' crossProject and CrossType from Scala.js 0.6.x
-
 import sbtcrossproject.CrossPlugin.autoImport.{ CrossType, crossProject }
 
 addCommandAlias(
@@ -89,6 +87,26 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
 
 lazy val coreJVM = core.jvm
 lazy val coreJS  = core.js
+
+lazy val subatomicDocs =
+  project.in(file("docs"))
+    .enablePlugins(SubatomicPlugin)
+    .dependsOn(catsJVM, zioJVM, monixJVM, monixBioJVM, scalacheckJVM, specs2JVM)
+    .settings(
+      unmanagedSourceDirectories in Compile +=
+        (baseDirectory in ThisBuild).value / "docs",
+      target := (baseDirectory in ThisBuild).value / "docs" / "target" / "subatomic-target",
+      libraryDependencies += "com.lihaoyi"  %% "scalatags" % "0.9.1",
+      libraryDependencies += "com.monovore" %% "decline"   % "1.3.0",
+      subatomicAddDependency := true,
+      subatomicInheritClasspath := true,
+      libraryDependencies ++= Seq(
+        "org.http4s"  %% "http4s-dsl"          % "0.21.0",
+        "org.http4s"  %% "http4s-blaze-server" % "0.21.0",
+        "org.http4s"  %% "http4s-blaze-client" % "0.21.0",
+        "com.lihaoyi" %% "fansi"               % "0.2.7"
+      )
+    )
 
 lazy val docs = project
   .in(file("modules/docs"))
@@ -344,7 +362,6 @@ lazy val intellijRunner = crossProject(JVMPlatform)
   )
 
 lazy val intellijRunnerJVM = intellijRunner.jvm
-
 
 // #################################################################################################
 // Misc
