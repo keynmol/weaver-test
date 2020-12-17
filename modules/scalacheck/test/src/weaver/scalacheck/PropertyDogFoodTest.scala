@@ -60,7 +60,7 @@ object Meta {
       super.checkConfig.copy(perPropertyParallelism = 1, initialSeed = Some(1L))
 
     simpleTest("foobar") {
-      forall { x: Int =>
+      forall { (x: Int) =>
         expect(x > 0)
       }
     }
