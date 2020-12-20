@@ -115,7 +115,7 @@ val allIntegrationsCoresFilter: ScopeFilter =
 
 lazy val docs = projectMatrix
   .in(file("modules/docs"))
-  .jvmPlatform(WeaverPlugin.supportedScalaVersions)
+  .jvmPlatform(WeaverPlugin.suppertedScala2Versions)
   .enablePlugins(DocusaurusPlugin, MdocPlugin)
   .dependsOn(core, scalacheck, cats, zio, monix, monixBio, specs2)
   .settings(
