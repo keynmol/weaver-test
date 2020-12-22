@@ -119,7 +119,7 @@ object WeaverPlugin extends AutoPlugin {
 
   lazy val scala212               = "2.12.12"
   lazy val scala213               = "2.13.3"
-  lazy val scala3                 = "3.0.0-M2"
+  lazy val scala3                 = "3.0.0-M3"
   lazy val supportedScalaVersions = List(scala212, scala213, scala3)
 
   lazy val suppertedScala2Versions = List(scala212, scala213)
@@ -149,7 +149,7 @@ object WeaverPlugin extends AutoPlugin {
     // https://github.com/sbt/sbt/issues/2654
     incOptions := incOptions.value.withLogRecompileOnMacro(false),
     // https://scalacenter.github.io/scalafix/docs/users/installation.html
-    semanticdbEnabled := true,
+    semanticdbEnabled := !scalaVersion.value.startsWith("3.0"),
     semanticdbVersion := scalafixSemanticdb.revision,
     libraryDependencies ++= {
       if (scalaVersion.value.startsWith("3.")) Seq.empty

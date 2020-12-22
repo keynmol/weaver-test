@@ -136,7 +136,7 @@ object DogFoodTests extends IOSuite {
         |  of
         |  multiline
         |  (failure)
-        |  assertion failed (modules/framework/cats/test/src/Meta.scala:27)
+        |  assertion failed (modules/framework/cats/test/src/Meta.scala:28)
         |
         |  $capturedExpression
         |

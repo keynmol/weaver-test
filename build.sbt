@@ -48,23 +48,19 @@ lazy val allModules = Seq(
   effectFrameworks
 ).flatten
 
-lazy val catsEffect3Version = "3.0.0-M4"
+lazy val catsEffect3Version = "3.0.0-M5"
 
 def catsEffectDependencies(proj: Project): Project = {
   proj.settings(
     libraryDependencies ++= {
       if (virtualAxes.value.contains(CatsEffect2Axis))
         Seq(
-          {
-            if (scalaVersion.value.startsWith("3.0"))
-              "co.fs2"    %%% "fs2-core" % "2.5.0-M3"
-            else "co.fs2" %%% "fs2-core" % "2.4.6"
-          },
-          "org.typelevel" %%% "cats-effect" % "2.3.0"
+          "co.fs2"        %%% "fs2-core"    % "2.5.0",
+          "org.typelevel" %%% "cats-effect" % "2.3.1"
         )
       else
         Seq(
-          "co.fs2"        %%% "fs2-core"    % "3.0.0-M6",
+          "co.fs2"        %%% "fs2-core"    % "3.0.0-M7",
           "org.typelevel" %%% "cats-effect" % catsEffect3Version
         )
     }
@@ -86,16 +82,17 @@ lazy val core = projectMatrix
     libraryDependencies ++= {
       if (virtualAxes.value.contains(VirtualAxis.jvm))
         Seq(
-          ("org.scala-js" %%% "scalajs-stubs" % "1.0.0" % "provided").withDottyCompat(scalaVersion.value)
+          ("org.scala-js" %%% "scalajs-stubs" % "1.0.0" % "provided").withDottyCompat(
+            scalaVersion.value)
         )
       else {
         Seq(
-          ("io.github.cquiroz" %%% "scala-java-time" % "2.0.0").withDottyCompat(scalaVersion.value)
+          ("io.github.cquiroz" %%% "scala-java-time" % "2.0.0").withDottyCompat(
+            scalaVersion.value)
         )
       }
     }
   )
-
 
 lazy val projectsWithAxes = Def.task {
   (name.value, virtualAxes.value, version.value)
@@ -188,13 +185,16 @@ lazy val framework = projectMatrix
     libraryDependencies ++= {
       if (virtualAxes.value.contains(VirtualAxis.jvm))
         Seq(
-          "org.scala-sbt"  % "test-interface" % "1.0",
-          ("org.scala-js" %%% "scalajs-stubs"  % "1.0.0" % "provided").withDottyCompat(scalaVersion.value)
+          "org.scala-sbt"   % "test-interface" % "1.0",
+          ("org.scala-js" %%% "scalajs-stubs"  % "1.0.0" % "provided").withDottyCompat(
+            scalaVersion.value)
         )
       else
         Seq(
-          ("org.scala-js"       %% "scalajs-test-interface" % scalaJSVersion).withDottyCompat(scalaVersion.value),
-          ("io.github.cquiroz" %%% "scala-java-time-tzdb"   % "2.0.0" % Test).withDottyCompat(scalaVersion.value)
+          ("org.scala-js" %% "scalajs-test-interface" % scalaJSVersion).withDottyCompat(
+            scalaVersion.value),
+          ("io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.0.0" % Test).withDottyCompat(
+            scalaVersion.value)
         )
     }
   )
@@ -223,7 +223,8 @@ lazy val specs2 = projectMatrix
     name := "specs2",
     testFrameworks := Seq(new TestFramework("weaver.framework.CatsEffect")),
     libraryDependencies ++= Seq(
-      ("org.specs2" %%% "specs2-matcher" % "4.10.5").withDottyCompat(scalaVersion.value)
+      ("org.specs2" %%% "specs2-matcher" % "4.10.5").withDottyCompat(
+        scalaVersion.value)
     )
   )
   .settings(WeaverPlugin.simpleLayout)
@@ -304,7 +305,8 @@ lazy val cats = projectMatrix
     testFrameworks := Seq(new TestFramework("weaver.framework.CatsEffect")),
     libraryDependencies += {
       // if(virtualAxes.contains(VirtualAxis.js))
-        ("io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.0.0" % Test).withDottyCompat(scalaVersion.value)
+      ("io.github.cquiroz" %%% "scala-java-time-tzdb" % "2.0.0" % Test).withDottyCompat(
+        scalaVersion.value)
     }
   )
 
