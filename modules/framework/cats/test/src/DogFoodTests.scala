@@ -128,15 +128,16 @@ object DogFoodTests extends IOSuite {
           case LoggedEvent.Error(msg) => msg
         }.get
 
-        val capturedExpression =
-          if (Platform.isScala3) "1 == 2" else "expect(1 == 2)"
+        // HONESTLY.
+        val (location, capturedExpression) =
+          if (Platform.isScala3) (27, "1 == 2") else (28, "expect(1 == 2)")
 
         val expected = s"""
         |- lots 0ms
         |  of
         |  multiline
         |  (failure)
-        |  assertion failed (modules/framework/cats/test/src/Meta.scala:28)
+        |  assertion failed (modules/framework/cats/test/src/Meta.scala:$location)
         |
         |  $capturedExpression
         |
