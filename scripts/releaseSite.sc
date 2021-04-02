@@ -162,5 +162,5 @@ def doInstallSSH() =  {
                     prefix = "docusaurus",
                     suffix = "install_ssh.sh")
   os.proc.apply(Seq("chmod", "+x", tmp.toString))
-  os.proc(tmp).call(cwd = os.pwd)
+  os.proc.apply(Seq("bash", tmp.toString)).call(cwd = os.pwd)
 }
