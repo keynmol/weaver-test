@@ -116,7 +116,6 @@ jobs:
         run: |
           mkdir -p $HOME/.ssh
           ssh-keyscan -t rsa github.com >> $HOME/.ssh/known_hosts
-          sbt docs/docusaurusCreateSite
           amm scripts/releaseSite.sc
         env:
           GITHUB_DEPLOY_KEY: ${{ secrets.GIT_DEPLOY_KEY }}
