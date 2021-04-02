@@ -12,61 +12,61 @@ env:
   JVM_OPTS: "-XX:+UseG1GC -XX:MaxMetaspaceSize=2g -Xms1g -Xmx7g -Xss2M -XX:+CMSClassUnloadingEnabled"
 
 jobs:
-  build:
-    name: Test ${{matrix.ceVersion}} ${{matrix.scalaVersion}} (${{matrix.scalaPlatform}})
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        java: [adopt@1.8]
-        scalaVersion: ["2_12", "2_13", "3_0_0_RC1"]
-        scalaPlatform: ["jvm", "js"]
-        ceVersion: ["CE2", "CE3"]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout current branch
-        uses: actions/checkout@v2
+  # build:
+  #   name: Test ${{matrix.ceVersion}} ${{matrix.scalaVersion}} (${{matrix.scalaPlatform}})
+  #   strategy:
+  #     matrix:
+  #       os: [ubuntu-latest]
+  #       java: [adopt@1.8]
+  #       scalaVersion: ["2_12", "2_13", "3_0_0_RC1"]
+  #       scalaPlatform: ["jvm", "js"]
+  #       ceVersion: ["CE2", "CE3"]
+  #   runs-on: ${{ matrix.os }}
+  #   steps:
+  #     - name: Checkout current branch
+  #       uses: actions/checkout@v2
 
-      - name: Cache
-        uses: coursier/cache-action@v6
-        with:
-          extraKey: ${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}}
+  #     - name: Cache
+  #       uses: coursier/cache-action@v6
+  #       with:
+  #         extraKey: ${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}}
 
-      - name: Setup Java and Scala
-        uses: olafurpg/setup-scala@v10
-        with:
-          java-version: ${{ matrix.java }}
+  #     - name: Setup Java and Scala
+  #       uses: olafurpg/setup-scala@v10
+  #       with:
+  #         java-version: ${{ matrix.java }}
 
-      - name: Run tests
-        run: sbt test_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}}
+  #     - name: Run tests
+  #       run: sbt test_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}}
 
-      - name: Run checks
-        if: matrix.scalaVersion == '2_13' && matrix.scalaPlatform == 'jvm'
-        run: |
-          sbt scalafix_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}} \
-              scalafixTests_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}} \
-              scalafmt_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}}
+  #     - name: Run checks
+  #       if: matrix.scalaVersion == '2_13' && matrix.scalaPlatform == 'jvm'
+  #       run: |
+  #         sbt scalafix_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}} \
+  #             scalafixTests_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}} \
+  #             scalafmt_${{matrix.ceVersion}}_${{matrix.scalaVersion}}_${{matrix.scalaPlatform}}
 
-  documentation:
-    name: Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout current branch
-        uses: actions/checkout@v2
+  # documentation:
+  #   name: Documentation
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout current branch
+  #       uses: actions/checkout@v2
 
-      - name: Cache
-        uses: coursier/cache-action@v6
+  #     - name: Cache
+  #       uses: coursier/cache-action@v6
 
-      - name: Setup Java and Scala
-        uses: olafurpg/setup-scala@v10
-        with:
-          java-version: adopt@1.8
+  #     - name: Setup Java and Scala
+  #       uses: olafurpg/setup-scala@v10
+  #       with:
+  #         java-version: adopt@1.8
 
-      - name: Run mdoc
-        run: sbt "docs/mdoc"
+  #     - name: Run mdoc
+  #       run: sbt "docs/mdoc"
 
   publish:
     name: Publish
-    needs: [documentation, build]
+    # needs: [documentation, build]
     if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v'))
     runs-on: ubuntu-latest
     steps:
@@ -96,7 +96,7 @@ jobs:
   site:
     name: Publish Site
     # needs: [publish]
-    if: ${{ github.head_ref == 'refs/heads/gh-actions' }}
+    # if: ${{ github.ref == 'refs/heads/gh-actions-changes' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch (full)
