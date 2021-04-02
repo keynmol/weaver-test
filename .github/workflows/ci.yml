@@ -96,7 +96,7 @@ jobs:
   site:
     name: Publish Site
     # needs: [publish]
-    if: startsWith(github.ref, 'refs/heads/gh-actions-changes')
+    if: ${{ github.ref == 'refs/heads/gh-actions-changes' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout current branch (full)
