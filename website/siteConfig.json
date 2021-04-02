@@ -4,9 +4,9 @@
   "url": "http(s)://disneystreaming.github.io/",
   "baseUrl": "/weaver-test/",
   "projectName": "weaver-test",
-  "organizationName": "disneystreaming",
+  "organizationName": "keynmol",
   "githubHost": "github.com",
-  "repoUrl": "https://github.com/disneystreaming/weaver-test",
+  "repoUrl": "https://github.com/keynmol/weaver-test",
   "separateCss": [
     "api"
   ],
@@ -16,7 +16,7 @@
       "label": "Docs"
     },
     {
-      "href": "https://github.com/disneystreaming/weaver-test",
+      "href": "https://github.com/keynmol/weaver-test",
       "label": "GitHub",
       "external": true
     }
@@ -38,6 +38,6 @@
   "ogImage": "img/undraw_online.svg",
   "twitterImage": "img/undraw_tweetstorm.svg",
   "twitter": true,
-  "twitterUsername": "disneystreaming",
+  "twitterUsername": "keynmol",
   "customDocsPath": "modules/docs/target/jvm-2.13/mdoc"
 }
