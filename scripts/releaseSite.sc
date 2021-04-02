@@ -160,7 +160,7 @@ def doInstallSSH() =  {
   val tmp = os.temp(contents = installSSHScript,
                     dir = os.pwd,
                     prefix = "docusaurus",
-                    suffix = "install_ssh.sh",
-                    perms = Set(OWNER_EXECUTE).asJava)
+                    suffix = "install_ssh.sh")
+                    //,perms = Set(OWNER_EXECUTE).asJava)
   os.proc(tmp).call(cwd = os.pwd)
 }
