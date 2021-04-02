@@ -119,4 +119,4 @@ jobs:
           sbt docs/docusaurusCreateSite
           amm scripts/releaseSite.sc
         env:
-          GITHUB_DEPLOY_KEY: ${{ secrets.GITHUB_DEPLOY_KEY }}
+          GITHUB_DEPLOY_KEY: ${{ secrets.GIT_DEPLOY_KEY }}
