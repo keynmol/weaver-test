@@ -29,7 +29,10 @@ def main(): Unit = {
   website.yarn("install")
   // Freezing version
 
-  val version     = sys.env("DRONE_TAG").dropWhile(_ == 'v')
+  val version = sys.env.get("GITHUB_REF")
+      .filter(_.startsWith("refs/tags/v"))
+      .map(_.drop("refs/tags/v".length))
+      .getOrElse(throw new Exception("GITHUB REF doesn't contain a tag!"))
   val siteConfig  = ujson.read(os.read(website / "siteConfig.json"))
   val orgName     = siteConfig("organizationName").str
   val projectName = siteConfig("projectName").str
